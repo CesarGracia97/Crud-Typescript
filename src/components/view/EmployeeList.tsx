@@ -1,44 +1,43 @@
 import "./../styles/EmployeeList.style.css"
+import { IEmployee } from "../interface/Employee.type";
 
-const EmployeesList = () => {
+type Props = {
+    list: IEmployee[]
+}
+
+const EmployeesList = (props: Props) => {
+
+    const {list} = props;
+
+
     return (
+        
         <div>
             <table>
                 <tr>
-                    <th>Company</th>
-                    <th>Contact</th>
-                    <th>Country</th>
+                    <th>Nombre y Apellido</th>
+                    <th>Email</th>
+                    <th>Edad</th>
+                    <th>Acciones</th>
                 </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisco Chang</td>
-                    <td>Mexico</td>
-                </tr>
-                <tr>
-                    <td>Ernst Handel</td>
-                    <td>Roland Mendel</td>
-                    <td>Austria</td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helen Bennett</td>
-                    <td>UK</td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>Yoshi Tannamuri</td>
-                    <td>Canada</td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovanni Rovelli</td>
-                    <td>Italy</td>
-                </tr>
+                {list.map((employee) => {
+                    console.log(employee);
+                    return (
+                        <tr key={employee.id}>
+                            <td>{`${employee.firstName} ${employee.lastName}`}</td>
+                            <td>{employee.email}</td>
+                            <td>{employee.age}</td>
+                            <td>
+                                <div>
+                                    <input type="button" value="View" />
+                                    <input type="button" value="View" />
+                                    <input type="button" value="View" />
+                                </div>
+                            </td>
+                        </tr>
+                    )
+                })}
+
             </table>
         </div>
     );
