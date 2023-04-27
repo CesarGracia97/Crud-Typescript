@@ -17,6 +17,14 @@ const Home = () => {
         setShownPage(PageEnum.add);
     }
     
+    const showListPage = () => {
+        setShownPage(PageEnum.list);
+    }
+
+    const addEmployeeHnd = (data : IEmployee) =>{
+        setEmployeeList([...employeeList, data]); 
+    }
+
     return (
         <>
             <article className="article-header">
@@ -27,13 +35,15 @@ const Home = () => {
             <section className="section-content">
                 {shownPage === PageEnum.list && (
                     <>
-                        <input type="button" value="Agregar Empleado" onClick={onAddEmployeeClickHnd} />
+                        <input type="button" 
+                        value="Agregar Empleado" 
+                        onClick={onAddEmployeeClickHnd} />
                         <EmployeesList list= {employeeList}/>
                     </>)
                 }
 
-                {
-                    shownPage === PageEnum.add && <AddEmployee />
+                {shownPage === PageEnum.add && (
+                    <AddEmployee onBackBtnClickHnd={showListPage} onSubmitClickHnd={addEmployeeHnd}/>)
                 }
 
             </section>

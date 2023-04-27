@@ -3,7 +3,7 @@ export interface IEmployee{
     firstName: string;
     lastName: string;
     email: string;
-    age: number;
+    age: string;
 }
 
 export const dummyEmployeeList : IEmployee[] = [{
@@ -11,7 +11,7 @@ export const dummyEmployeeList : IEmployee[] = [{
     firstName: "Nombre_1",
     lastName: "Apellido_1",
     email: "email_1@gmail.com",
-    age: 1,
+    age: "1",
 },];
 
 export enum  PageEnum{
