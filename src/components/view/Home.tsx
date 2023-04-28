@@ -5,6 +5,7 @@ import { useState } from "react";
 import { IEmployee, PageEnum, dummyEmployeeList } from "./../interface/Employee.type";
 import EmployeesList from "./EmployeeList";
 import AddEmployee from "./AddEmployee";
+import { timeStamp } from "console";
 
 const Home = () => {
 
@@ -15,14 +16,23 @@ const Home = () => {
 
     const onAddEmployeeClickHnd = () =>{
         setShownPage(PageEnum.add);
-    }
+    };
     
     const showListPage = () => {
         setShownPage(PageEnum.list);
-    }
+    };
 
-    const addEmployeeHnd = (data : IEmployee) =>{
+    const addEmployeeHnd = (data : IEmployee) => {
         setEmployeeList([...employeeList, data]); 
+    };
+
+    const deleteEmployee = (data: IEmployee)=> {
+        //Para Index, actulizara el nuevo record
+        const indexToDelete = employeeList.indexOf(data);
+        const tempList = [ ...employeeList];
+
+        tempList.splice(indexToDelete, 1);
+        setEmployeeList(tempList);
     }
 
     return (
@@ -35,10 +45,14 @@ const Home = () => {
             <section className="section-content">
                 {shownPage === PageEnum.list && (
                     <>
-                        <input type="button" 
+                        <input 
+                        className="add-employee-btn"
+                        type="button" 
                         value="Agregar Empleado" 
                         onClick={onAddEmployeeClickHnd} />
-                        <EmployeesList list= {employeeList}/>
+                        <EmployeesList 
+                        list= {employeeList} 
+                        onDeleteClickHnd={deleteEmployee}/>
                     </>)
                 }
 
