@@ -1,21 +1,26 @@
 import "../styles/Home.style.css";
 import "../interface/Employee.type";
 import './EmployeeList'
-import { useState } from "react";
-import { IEmployee, PageEnum, dummyEmployeeList } from "../interface/Employee.type";
+import { useState , useEffect  } from "react";
+import { IEmployee, PageEnum } from "../interface/Employee.type";
 import EmployeesList from "./EmployeeList";
 import AddEmployee from "./AddEmployee";
 import EditEmployee from "./EditEmployee";
 
 const Home = () => {
 
-    const [employeeList, setEmployeeList] = useState(
-        dummyEmployeeList as  IEmployee[]);
-    
+    const [employeeList, setEmployeeList] = useState([] as  IEmployee[]);
     const [shownPage, setShownPage] = useState(PageEnum.list);
     const [dataToEdit, setDataToEdit] = useState({} as IEmployee);
 
-    const onAddEmployeeClickHnd = () =>{
+    useEffect(() => {
+       const listInString = window.localStorage.getItem("EmployeeList");
+       if(listInString){
+        _setEmployeeList(JSON.parse(listInString));
+       }
+    },[])
+
+    const onAddEmployeeClickHnd = () => {
         setShownPage(PageEnum.add);
     };
     
@@ -23,11 +28,17 @@ const Home = () => {
         setShownPage(PageEnum.list);
     };
 
+    const _setEmployeeList = (list : IEmployee[]) => {
+        setEmployeeList(list)
+        window.localStorage.setItem("EmployeeList", JSON.stringify(list))
+
+    }
+
     const addEmployeeHnd = (data : IEmployee) => {
-        setEmployeeList([...employeeList, data]); 
+        _setEmployeeList([...employeeList, data]); 
     };
 
-    const deleteEmployee = (data: IEmployee)=> {
+    const deleteEmployee = (data: IEmployee) => {
         //Para Index, actulizara el nuevo record
         const indexToDelete = employeeList.indexOf(data);
         const tempList = [ ...employeeList];
@@ -46,7 +57,7 @@ const Home = () => {
         const indexOfRecord =employeeList.indexOf(filteredData);
         const tempData = [...employeeList];
         tempData [indexOfRecord] = data;
-        setEmployeeList(tempData)
+        _setEmployeeList(tempData)
     }
 
     return (
