@@ -1,16 +1,17 @@
-import "./../styles/EmployeeList.style.css"
+import "../styles/EmployeeList.style.css"
 import { IEmployee } from "../interface/Employee.type";
 import EmployeeModal from "./EmployeeModal";
 import { useState } from "react"
 
 type Props = {
     list: IEmployee[];
-    onDeleteClickHnd: (data: IEmployee) => void
+    onDeleteClickHnd: (data: IEmployee) => void;
+    onEdit: (data: IEmployee) => void;
 };
 
 const EmployeesList = (props: Props) => {
 
-    const {list, onDeleteClickHnd} = props;
+    const {list, onDeleteClickHnd, onEdit} = props;
     const [showModal, setShowModal] = useState (false);
     const [dataToShow, setDataToShow] = useState(null as IEmployee | null);
 
@@ -43,7 +44,7 @@ const EmployeesList = (props: Props) => {
                             <td>
                                 <div>
                                     <input type="button" value="Ver" onClick={() => viewEmployee(employee)} />
-                                    <input type="button" value="Editar" />
+                                    <input type="button" value="Editar" onClick={() => onEdit(employee)}/>
                                     <input type="button" value="Eliminar" onClick={() => onDeleteClickHnd(employee)} />
                                 </div>
                             </td>

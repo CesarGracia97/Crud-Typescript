@@ -1,11 +1,11 @@
-import "./../styles/Home.style.css";
-import "./../interface/Employee.type";
+import "../styles/Home.style.css";
+import "../interface/Employee.type";
 import './EmployeeList'
 import { useState } from "react";
-import { IEmployee, PageEnum, dummyEmployeeList } from "./../interface/Employee.type";
+import { IEmployee, PageEnum, dummyEmployeeList } from "../interface/Employee.type";
 import EmployeesList from "./EmployeeList";
 import AddEmployee from "./AddEmployee";
-import { timeStamp } from "console";
+import EditEmployee from "./EditEmployee";
 
 const Home = () => {
 
@@ -13,6 +13,7 @@ const Home = () => {
         dummyEmployeeList as  IEmployee[]);
     
     const [shownPage, setShownPage] = useState(PageEnum.list);
+    const [dataToEdit, setDataToEdit] = useState({} as IEmployee);
 
     const onAddEmployeeClickHnd = () =>{
         setShownPage(PageEnum.add);
@@ -35,6 +36,19 @@ const Home = () => {
         setEmployeeList(tempList);
     }
 
+    const editEmployeeData = (data: IEmployee) => {
+        setShownPage(PageEnum.edit);
+        setDataToEdit(data)
+    }
+
+    const updateData = (data : IEmployee) => {
+        const filteredData =  employeeList.filter(x => x.id === data.id)[0];
+        const indexOfRecord =employeeList.indexOf(filteredData);
+        const tempData = [...employeeList];
+        tempData [indexOfRecord] = data;
+        setEmployeeList(tempData)
+    }
+
     return (
         <>
             <article className="article-header">
@@ -52,14 +66,15 @@ const Home = () => {
                         onClick={onAddEmployeeClickHnd} />
                         <EmployeesList 
                         list= {employeeList} 
-                        onDeleteClickHnd={deleteEmployee}/>
+                        onDeleteClickHnd={deleteEmployee}
+                        onEdit={editEmployeeData}/>
                     </>)
                 }
 
                 {shownPage === PageEnum.add && (
                     <AddEmployee onBackBtnClickHnd={showListPage} onSubmitClickHnd={addEmployeeHnd}/>)
                 }
-
+                {shownPage === PageEnum.edit && <EditEmployee data={dataToEdit} onBackBtnClickHnd={showListPage} onUpdateClickHnd={updateData}/>}
             </section>
         </>
     );

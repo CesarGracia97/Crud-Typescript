@@ -1,20 +1,21 @@
+import "../styles/EditEmployee.style.css"
+import { useState} from "react"
 import { IEmployee } from "../interface/Employee.type";
-import "../styles/AddEmployee.style.css"
-import { useState } from "react"
 
-type Props ={
+ type Props ={
+    data: IEmployee;
     onBackBtnClickHnd : () => void;
-    onSubmitClickHnd : (data: IEmployee) => void;
-}
+    onUpdateClickHnd : (data: IEmployee) => void;
+    
+ }
+const EditEmployee = (props : Props) => {
 
-const AddEmployee = (props: Props) => {
+    const {data, onBackBtnClickHnd, onUpdateClickHnd} = props;
+    const[firstName, setFirstName] = useState(data.firstName);
+    const[lastName, setLastName] = useState(data.lastName);
+    const[email, setEmail] = useState(data.email);
+    const[age, setAge] = useState(data.age);
 
-    const[firstName, setFirstName] = useState("");
-    const[lastName, setLastName] = useState("");
-    const[email, setEmail] = useState("");
-    const[age, setAge] = useState("");
-
-    const { onBackBtnClickHnd, onSubmitClickHnd} = props
 
     const onFirstNameChangeHnd = (e : any) => {
         setFirstName(e.target.value)
@@ -31,18 +32,18 @@ const AddEmployee = (props: Props) => {
 
     const onSubmitBtnClickHnd = (e : any) => {
         e.preventDefault();
-        const data: IEmployee = {
-            id: new Date().toJSON().toString(),
+        const updateedData: IEmployee = {
+            id: data.id,
             firstName: firstName,
             lastName: lastName,
             email: email,
             age: age
         };
-        onSubmitClickHnd(data);
+        onUpdateClickHnd(updateedData);
         onBackBtnClickHnd();
     };
-    
-    return(
+
+    return (
         <div className="form-container">
             <div>
                 <h3>Agregar Empleados</h3>
@@ -66,11 +67,12 @@ const AddEmployee = (props: Props) => {
                 </div>
                 <div>
                     <input type="button" value="Atras" onClick={onBackBtnClickHnd}/>
-                    <input type="submit" value="Agregar Empleado" />
+                    <input type="submit" value="Editar Empleado" />
                 </div>
             </form>
         </div>
     );
+
 };
 
-export default AddEmployee;
+export default EditEmployee;
