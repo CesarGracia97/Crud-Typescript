@@ -1,3 +1,5 @@
+
+//Variables y sus tipos
 export interface IEmployee{
     id: string;
     firstName: string;
@@ -6,7 +8,7 @@ export interface IEmployee{
     age: string;
 }
 
-
+// acciones
 export enum  PageEnum{
     list,
     add,

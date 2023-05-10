@@ -31,6 +31,7 @@ const AddEmployee = (props: Props) => {
 
     const onSubmitBtnClickHnd = (e : any) => {
         e.preventDefault();
+        //Data es un objeto de Empleados y este lo desfragmenta en todas sus variables en donde agarra su informacion por medio de un evento
         const data: IEmployee = {
             id: new Date().toJSON().toString(),
             firstName: firstName,
